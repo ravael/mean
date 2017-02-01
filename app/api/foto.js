@@ -1,15 +1,19 @@
+var mongoose = require('mongoose');
+
 var api = {};
 
-var CONTADOR = 2;
-
- var fotos = [
-        {_id: 1, titulo: 'Leão', url:'http://www.fundosanimais.com/Minis/leoes.jpg' },
-        {_id: 2, titulo: 'Leão 2', url:'http://www.fundosanimais.com/Minis/leoes.jpg' }
-    ];
 
 api.lista = function(req, res) {
 
-    res.json(fotos);
+    var model = mongoose.model('Foto');
+
+    model.find()
+    .then(function(fotos) {
+        res.json(fotos);
+    }, function(error) {
+        console.log(error);
+        res.sendStatus(500);
+    });
 };
 
 api.buscaPorId = function(req,res){
